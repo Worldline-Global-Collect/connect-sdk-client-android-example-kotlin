@@ -1,0 +1,67 @@
+/*
+ * Copyright (c) 2022. Worldline Global Collect B.V
+ */
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    namespace 'com.worldline.connect.android.example.kotlin.common'
+
+    defaultConfig {
+        minSdk 21
+        compileSdk 34
+        targetSdk 34
+    }
+
+    compileOptions {
+        sourceCompatibility java_version
+        targetCompatibility java_version
+    }
+
+    kotlinOptions {
+        jvmTarget = kotlin_jvm_target
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    lint {
+        abortOnError false
+        lintConfig file('lint.xml')
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "Boolean", "LOGGING_ENABLED", 'true'
+        }
+        // To disable logging in production, you can set the LOGGING_ENABLED field to false in a release build of your app
+        /*
+        release {
+            buildConfigField "Boolean", "LOGGING_ENABLED", 'false'
+        }
+        */
+    }
+}
+
+dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "com.google.code.gson:gson:$gson_version"
+    // Android X
+    implementation "androidx.core:core-ktx:$core_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-core-ktx:$lifecycle_version"
+
+    // UI
+    implementation "com.google.android.material:material:$material_version"
+
+    // Google pay
+    implementation "com.google.android.gms:play-services-wallet:$googlePay_version"
+
+    // Worldline
+    implementation "com.worldline-solutions.connect:connect-sdk-client-android:$connectSDK_version"
+}

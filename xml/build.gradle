@@ -1,0 +1,77 @@
+/*
+ * Copyright (c) 2022. Worldline Global Collect B.V
+ */
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    namespace 'com.worldline.connect.android.example.kotlin.xml'
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    defaultConfig {
+        applicationId "com.company.android.exampleapp.xml"
+        minSdk 21
+        compileSdk 34
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility java_version
+        targetCompatibility java_version
+    }
+
+    kotlinOptions {
+        jvmTarget = kotlin_jvm_target
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lint {
+        abortOnError false
+        lintConfig file('lint.xml')
+    }
+}
+
+dependencies {
+    // Project
+    implementation project(path: ':common')
+
+    // Kotlin
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    // Android X
+    implementation "androidx.core:core-ktx:$core_version"
+    implementation "androidx.appcompat:appcompat:$appCompat_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.cardview:cardview:1.0.0"
+
+    // UI
+    implementation "com.google.android.material:material:$material_version"
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation files('libs/stepindicator-release.aar')
+
+    // Worldline
+    implementation "com.worldline-solutions.connect:connect-sdk-client-android:$connectSDK_version"
+
+    // Google pay
+    implementation "com.google.android.gms:play-services-wallet:$googlePay_version"
+
+    implementation "com.google.code.gson:gson:$gson_version"
+}
