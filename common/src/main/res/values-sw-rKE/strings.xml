@@ -540,6 +540,7 @@
 	<string name="gc.general.paymentProducts.863.wrongPaymentMethod">Ukishindwa kulipa ukitumia mbinu ya malipo iliyo hapo juu, tafadhali gusa \'Ghairi\' kisha uchague bidhaa nyingine ya malipo ili ukamilishe malipo yako.</string>
 	<string name="gc.general.paymentProducts.864.name">Alipay</string>
 	<string name="gc.general.paymentProducts.865.name">Lipia kwa benki yako</string>
+	<string name="gc.general.paymentProducts.866.name">AliPay+</string>
 	<string name="gc.general.paymentProducts.869.name">China UnionPay</string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.label">Jina la mkaazi </string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.placeholder">Jina la mkaazi </string>

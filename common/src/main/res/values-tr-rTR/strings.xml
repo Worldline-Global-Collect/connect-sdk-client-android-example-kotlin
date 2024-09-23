@@ -540,6 +540,7 @@
 	<string name="gc.general.paymentProducts.863.wrongPaymentMethod">Yukarıda belirtilen ödeme yöntemiyle ödeme yapamıyorsanız lütfen ‘İptal’ düğmesine tıklayın ve başka bir ödeme ürününü seçerek ödemenizi tamamlayın.</string>
 	<string name="gc.general.paymentProducts.864.name">Alipay</string>
 	<string name="gc.general.paymentProducts.865.name">Bankanızla ödeyin</string>
+	<string name="gc.general.paymentProducts.866.name">AliPay+</string>
 	<string name="gc.general.paymentProducts.869.name">China UnionPay</string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.label">İkamet edenin adı </string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.placeholder">İkamet edenin adı </string>

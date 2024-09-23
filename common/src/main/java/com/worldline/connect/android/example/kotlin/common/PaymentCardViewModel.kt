@@ -272,19 +272,16 @@ class PaymentCardViewModel(application: Application) : AndroidViewModel(applicat
     fun updateValueInPaymentRequest(paymentProductField: PaymentProductField, value: String) {
         val paymentProductFieldId = paymentProductField.id
 
-        if (paymentRequest.accountOnFile != null) {
-            if (
-                paymentRequest.accountOnFile.attributes.firstOrNull {
-                    it.key == paymentProductFieldId
-                }?.isEditingAllowed == true ||
-                paymentProductFieldId == SECURITY_NUMBER
-            ) {
-                paymentRequest.setValue(paymentProductFieldId, value)
-            }
-        } else {
-            val unmaskedValue = paymentProductField.removeMask(value)
-            paymentRequest.setValue(paymentProductFieldId, unmaskedValue)
+        if (
+            paymentRequest.accountOnFile?.attributes?.firstOrNull {
+                it.key == paymentProductFieldId
+            }?.isEditingAllowed == false
+        ) {
+            return
         }
+
+        val unmaskedValue = paymentProductField.removeMask(value)
+        paymentRequest.setValue(paymentProductFieldId, unmaskedValue)
     }
 
     fun shouldEnablePayButton() {

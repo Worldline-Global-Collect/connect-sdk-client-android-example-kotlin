@@ -280,10 +280,6 @@ class PaymentCardFragment : Fragment() {
     private fun updateCardFieldById(paymentProductField: PaymentProductField) {
         implementedPaymentProductFields.forEach { implementedPaymentProductsField ->
             if (implementedPaymentProductsField.key == paymentProductField.id) {
-                paymentCardViewModel.updateValueInPaymentRequest(
-                    paymentProductField,
-                    implementedPaymentProductsField.value.getPaymentProductFieldValue()
-                )
                 implementedPaymentProductsField.value.setPaymentProductField(
                     paymentProductField,
                     cardFieldAfterTextChangedListener

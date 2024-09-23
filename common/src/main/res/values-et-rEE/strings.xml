@@ -540,6 +540,7 @@
 	<string name="gc.general.paymentProducts.863.wrongPaymentMethod">Kui te ei saa kirjeldatud maksemeetodit kasutades tasuda, toksake „Cancel“ ja valige makse sooritamiseks muu võimalus.</string>
 	<string name="gc.general.paymentProducts.864.name">Alipay</string>
 	<string name="gc.general.paymentProducts.865.name">Maksa panga kaudu</string>
+	<string name="gc.general.paymentProducts.866.name">AliPay+</string>
 	<string name="gc.general.paymentProducts.869.name">China UnionPay</string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.label">Residendi nimi </string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.placeholder">Residendi nimi </string>

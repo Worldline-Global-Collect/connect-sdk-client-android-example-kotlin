@@ -18,6 +18,7 @@ import com.worldline.connect.android.example.kotlin.common.PaymentScreen
 import com.worldline.connect.android.example.kotlin.common.PaymentSharedViewModel
 import com.worldline.connect.android.example.kotlin.common.utils.Status
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.worldline.connect.android.example.kotlin.common.utils.Constants
 import com.worldline.connect.sdk.client.android.ConnectSDK
 import com.worldline.connect.sdk.client.android.model.accountonfile.AccountOnFile
 import com.worldline.connect.sdk.client.android.model.paymentitem.BasicPaymentItem
@@ -81,10 +82,10 @@ class PaymentProductFragment : Fragment() {
         when (basicPaymentItem) {
             is BasicPaymentProduct -> {
                 when {
-                    basicPaymentItem.paymentProductGroup.equals(PAYMENT_PRODUCT_GROUP_CARDS, ignoreCase = true) -> {
+                    basicPaymentItem.paymentMethod.equals(Constants.PAYMENT_METHOD_CARD, ignoreCase = true) -> {
                         findNavController().navigate(PaymentProductFragmentDirections.navigateToPaymentCardFragment())
                     }
-                    basicPaymentItem.id.equals(PAYMENT_PRODUCT_ID_GOOGLE_PAY) -> {
+                    basicPaymentItem.id.equals(Constants.GOOGLE_PAY_PRODUCT_ID) -> {
                         findNavController().navigate(PaymentProductFragmentDirections.navigateToGooglePayFragment())
                     }
                     else -> {
@@ -93,7 +94,7 @@ class PaymentProductFragment : Fragment() {
                 }
             }
             is BasicPaymentProductGroup -> {
-                if (basicPaymentItem.id.equals(PAYMENT_PRODUCT_GROUP_CARDS, ignoreCase = true)) {
+                if (basicPaymentItem.id.equals(Constants.PAYMENT_PRODUCT_GROUP_CARDS, ignoreCase = true)) {
                     findNavController().navigate(PaymentProductFragmentDirections.navigateToPaymentCardFragment())
                 } else {
                     showPaymentProductNotImplementedBottomSheetDialog()
@@ -117,12 +118,5 @@ class PaymentProductFragment : Fragment() {
                 text = getString(R.string.gc_general_errors_productUnavailable)
             }
         }.show()
-    }
-
-    private companion object {
-        // the correct payment product is initialized based on this identifier.
-        // In this example only Cards and Google Pay implemented.
-        const val PAYMENT_PRODUCT_GROUP_CARDS = "cards"
-        const val PAYMENT_PRODUCT_ID_GOOGLE_PAY = "320"
     }
 }

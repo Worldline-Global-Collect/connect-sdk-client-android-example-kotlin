@@ -30,6 +30,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.worldline.connect.android.example.kotlin.compose.R
 import com.worldline.connect.android.example.kotlin.common.PaymentScreen
 import com.worldline.connect.android.example.kotlin.common.PaymentSharedViewModel
+import com.worldline.connect.android.example.kotlin.common.utils.Constants
 import com.worldline.connect.android.example.kotlin.common.utils.Status
 import com.worldline.connect.android.example.kotlin.compose.components.BottomSheetContent
 import com.worldline.connect.android.example.kotlin.compose.components.FailedText
@@ -40,9 +41,6 @@ import com.worldline.connect.sdk.client.android.model.accountonfile.AccountOnFil
 import com.worldline.connect.sdk.client.android.model.paymentitem.BasicPaymentItems
 import com.worldline.connect.sdk.client.android.model.paymentproduct.BasicPaymentProduct
 import com.worldline.connect.sdk.client.android.model.paymentproductgroup.BasicPaymentProductGroup
-
-const val PAYMENT_PRODUCT_GROUP_CARDS = "cards"
-const val PAYMENT_PRODUCT_ID_GOOGLE_PAY = "320"
 
 @Composable
 fun ProductScreen(
@@ -202,10 +200,10 @@ private fun navigateToScreen(
 
         is BasicPaymentProduct -> {
             when {
-                selectedPaymentProduct.paymentProductGroup.equals(PAYMENT_PRODUCT_GROUP_CARDS, ignoreCase = true) -> {
+                selectedPaymentProduct.paymentMethod.equals(Constants.PAYMENT_METHOD_CARD, ignoreCase = true) -> {
                     navController.navigate(PaymentScreen.CARD.route)
                 }
-                selectedPaymentProduct.id.equals(PAYMENT_PRODUCT_ID_GOOGLE_PAY) -> {
+                selectedPaymentProduct.id.equals(Constants.GOOGLE_PAY_PRODUCT_ID) -> {
                     launchGooglePay()
                 }
                 else -> {
@@ -214,7 +212,7 @@ private fun navigateToScreen(
             }
         }
         is BasicPaymentProductGroup -> {
-            if (selectedPaymentProduct.id.equals(PAYMENT_PRODUCT_GROUP_CARDS, ignoreCase = true)) {
+            if (selectedPaymentProduct.id.equals(Constants.PAYMENT_PRODUCT_GROUP_CARDS, ignoreCase = true)) {
                 navController.navigate(PaymentScreen.CARD.route)
 
             } else {

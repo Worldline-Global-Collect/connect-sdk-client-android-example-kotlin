@@ -540,6 +540,7 @@
 	<string name="gc.general.paymentProducts.863.wrongPaymentMethod">When you are unable to pay using the payment method above, please tap \'Cancel\' and select another payment product to complete your payment.</string>
 	<string name="gc.general.paymentProducts.864.name">Alipay</string>
 	<string name="gc.general.paymentProducts.865.name">Pay with your bank</string>
+	<string name="gc.general.paymentProducts.866.name">AliPay+</string>
 	<string name="gc.general.paymentProducts.869.name">China UnionPay</string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.label">Resident name </string>
 	<string name="gc.general.paymentProducts.869.paymentProductFields.residentIdName.placeholder">Resident name </string>
