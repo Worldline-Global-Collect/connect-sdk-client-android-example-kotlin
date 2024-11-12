@@ -29,6 +29,8 @@
 	<string name="payment_configuration_other_options" translatable="false">Other options</string>
 	<string name="payment_configuration_recurring_payment" translatable="false">Payment is Recurring</string>
 	<string name="payment_configuration_recurring_payment_helper_text" translatable="false">Indicates whether the payment product that is used for this payment should support recurring payments. If set to true, products not supporting recurring will be filtered</string>
+	<string name="payment_configuration_payment_in_installments" translatable="false">Payment is in installments</string>
+	<string name="payment_configuration_payment_in_installments_helper_text" translatable="false">Use this property to indicate whether the payment will be paid in instalments. This will be taken into account when determining the availability of credit cards when making an IIN details call</string>
 	<string name="payment_configuration_group_payment_products" translatable="false">Group payment products</string>
 	<string name="payment_configuration_group_payment_products_helper_text" translatable="false">Enabling this setting will bundle all Credit Card payment products to a single list item (Payment Product Group). The IIN Details service call can be used to determine what card product is actually used by the consumer.</string>
 	<string name="payment_configuration_configure_google_pay" translatable="false">Configure Google Pay</string>

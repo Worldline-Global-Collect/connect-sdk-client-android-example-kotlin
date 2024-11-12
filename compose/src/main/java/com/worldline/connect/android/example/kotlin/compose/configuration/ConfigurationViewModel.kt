@@ -45,7 +45,7 @@ class ConfigurationViewModel : ViewModel() {
 
     fun validateForm() {
         val googlePayFields =
-            if (uiState.otherOptionsFields[2].isChecked.value) uiState.googlePayFields else emptyList()
+            if (uiState.otherOptionsFields[3].isChecked.value) uiState.googlePayFields else emptyList()
         val inputFields =
             concatenate(uiState.sessionDetailFields, uiState.paymentDetailsFields, googlePayFields)
         inputFields.forEach { textField ->
@@ -130,6 +130,10 @@ data class ConfigurationUiState(
         CheckBoxField(
             label = R.string.payment_configuration_recurring_payment,
             bottomSheetContent = BottomSheetContent(R.string.payment_configuration_recurring_payment_helper_text)
+        ),
+        CheckBoxField(
+            label = R.string.payment_configuration_payment_in_installments,
+            bottomSheetContent = BottomSheetContent(R.string.payment_configuration_payment_in_installments_helper_text)
         ),
         CheckBoxField(
             label = R.string.payment_configuration_group_payment_products,

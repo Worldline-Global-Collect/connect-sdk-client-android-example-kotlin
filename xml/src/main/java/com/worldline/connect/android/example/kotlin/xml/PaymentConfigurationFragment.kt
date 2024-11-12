@@ -121,69 +121,51 @@ class PaymentConfigurationFragment : Fragment() {
     private fun initInputFieldsDrawableEndClickListeners() {
         binding.apply {
             tilPaymentConfigurationClientSessionId.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_client_session_id_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_client_session_id_helper_text))
             }
 
             tilPaymentConfigurationCustomerId.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_customer_id_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_customer_id_helper_text))
             }
 
             tilPaymentConfigurationClientApiUrl.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_clientApiUrl_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_clientApiUrl_helper_text))
             }
 
             tilPaymentConfigurationAssetsUrl.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_assetsUrl_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_assetsUrl_helper_text))
             }
 
             tilPaymentConfigurationAmount.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_amount_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_amount_helper_text))
             }
 
             tilPaymentConfigurationCountryCode.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_country_code_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_country_code_helper_text))
             }
 
             tilPaymentConfigurationCurrencyCode.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_currency_code_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_currency_code_helper_text))
             }
 
             tilPaymentConfigurationMerchantId.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_merchant_name_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_merchant_name_helper_text))
             }
 
             tilPaymentConfigurationMerchantName.setEndIconOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_merchant_name_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_merchant_name_helper_text))
             }
 
             ivPaymentConfigurationRecurringPaymentHelperIcon.setOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_recurring_payment_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_recurring_payment_helper_text))
+            }
+
+            ivPaymentConfigurationPaymentInInstallmentsIcon.setOnClickListener {
+                showBottomSheetDialog(getString(R.string.payment_configuration_payment_in_installments_helper_text))
             }
 
             ivPaymentConfigurationGroupPaymentProductsHelperIcon.setOnClickListener {
-                showInputFieldExplanationTextBottomSheetDialog(
-                    getString(R.string.payment_configuration_group_payment_products_helper_text)
-                )
+                showBottomSheetDialog(getString(R.string.payment_configuration_group_payment_products_helper_text))
             }
         }
     }
@@ -290,8 +272,9 @@ class PaymentConfigurationFragment : Fragment() {
                     amount, binding.etPaymentConfigurationCurrencyCode.text.toString()
                 ),
                 binding.etPaymentConfigurationCountryCode.text.toString(),
-                false,
-                context?.getCurrentLocale()
+                binding.cbPaymentConfigurationRecurringPayment.isChecked,
+                context?.getCurrentLocale(),
+                binding.cbPaymentConfigurationPaymentInInstallments.isChecked,
             ),
             binding.cbPaymentConfigurationGroupPaymentProducts.isChecked
         )
@@ -355,11 +338,11 @@ class PaymentConfigurationFragment : Fragment() {
         }
     }
 
-    private fun showInputFieldExplanationTextBottomSheetDialog(explanationText: String) {
+    private fun showBottomSheetDialog(bottomSheetText: String) {
         BottomSheetDialog(requireContext()).apply {
             setContentView(R.layout.bottomsheet_information)
             findViewById<TextView>(R.id.tvInformationText)?.apply {
-                text = explanationText
+                text = bottomSheetText
             }
         }.show()
     }

@@ -80,7 +80,7 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_material_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.activity:activity-compose:1.9.0'
+    implementation 'androidx.activity:activity-compose:1.9.3'
     implementation "com.google.accompanist:accompanist-navigation-animation:0.34.0"
     implementation "androidx.compose.material:material-icons-extended:$compose_material_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"

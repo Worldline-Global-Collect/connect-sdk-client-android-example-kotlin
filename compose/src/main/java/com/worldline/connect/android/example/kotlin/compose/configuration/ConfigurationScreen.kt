@@ -57,11 +57,12 @@ fun ConfigurationScreen(
                 uiState.paymentDetailsFields[2].text),
                 uiState.paymentDetailsFields[1].text,
                 uiState.otherOptionsFields[0].isChecked.value,
-                Locale.getDefault()
+                Locale.getDefault(),
+                uiState.otherOptionsFields[1].isChecked.value,
             ),
-            uiState.otherOptionsFields[1].isChecked.value
+            uiState.otherOptionsFields[2].isChecked.value
         )
-        if (uiState.otherOptionsFields[2].isChecked.value) {
+        if (uiState.otherOptionsFields[3].isChecked.value) {
             paymentSharedViewModel.googlePayConfiguration = GooglePayConfiguration(true,
                 uiState.googlePayFields[0].text,
                 uiState.googlePayFields[1].text)
@@ -130,8 +131,11 @@ private fun ConfigurationContent(
         LabelledCheckbox(checkBoxField = uiState.otherOptionsFields[1], onTrailingIconClicked = {
             showBottomSheet(uiState.otherOptionsFields[1].bottomSheetContent)
         })
+        LabelledCheckbox(checkBoxField = uiState.otherOptionsFields[2], onTrailingIconClicked = {
+            showBottomSheet(uiState.otherOptionsFields[2].bottomSheetContent)
+        })
         GooglePaySection(
-            checkBoxField = uiState.otherOptionsFields[2],
+            checkBoxField = uiState.otherOptionsFields[3],
             uiState.googlePayFields,
             showBottomSheet = { showBottomSheet(it) }
         )
