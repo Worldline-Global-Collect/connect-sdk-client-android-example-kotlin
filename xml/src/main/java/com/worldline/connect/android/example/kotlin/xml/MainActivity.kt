@@ -8,8 +8,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.worldline.connect.android.example.kotlin.xml.databinding.ActivityMainBinding
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,8 +47,20 @@ class MainActivity : AppCompatActivity() {
             navHostFragment.findNavController().popBackStack()
         }
 
+        setWindowInsets()
+
         initStepIndicator()
         setOnBackPressedListener();
+    }
+
+    private fun setWindowInsets() {
+        binding.mainActivityContainer.apply {
+            ViewCompat.setOnApplyWindowInsetsListener(this) { v, wi ->
+                val insets = wi.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
+                v.updatePadding(insets.left, insets.top, insets.right, insets.bottom)
+                WindowInsetsCompat.CONSUMED
+            }
+        }
     }
 
     private fun setOnBackPressedListener() {

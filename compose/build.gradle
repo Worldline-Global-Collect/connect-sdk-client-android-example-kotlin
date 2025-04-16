@@ -3,8 +3,9 @@
  */
 
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.compose.compiler
 }
 
 android {
@@ -13,8 +14,8 @@ android {
     defaultConfig {
         applicationId "com.example.android.exampleapp.compose"
         minSdk 21
-        compileSdk 34
-        targetSdk 34
+        compileSdk 35
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -35,7 +36,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     compileOptions {
@@ -65,32 +66,31 @@ dependencies {
     implementation project(path: ':common')
 
     // Kotlin
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation libs.kotlinx.coroutines.android
 
     // Android X
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.appcompat:appcompat:$appCompat_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation libs.core.ktx
+    implementation libs.appcompat
+    implementation libs.lifecycle.runtime.ktx
 
     // UI
-    implementation "com.google.android.material:material:$material_version"
-    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation libs.material
+    implementation libs.coil.compose
 
     // Jetpack compose
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_material_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.activity:activity-compose:1.9.3'
-    implementation "com.google.accompanist:accompanist-navigation-animation:0.34.0"
-    implementation "androidx.compose.material:material-icons-extended:$compose_material_version"
-    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation libs.compose.ui
+    implementation libs.compose.material
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.activity.compose
+    implementation libs.accompanist.navigation.animation
+    implementation libs.compose.material.icons.extended
+    implementation libs.runtime.livedata
 
     // Google pay
-    implementation "com.google.android.gms:play-services-wallet:$googlePay_version"
+    implementation libs.play.services.wallet
 
     // Worldline
-    implementation "com.worldline-solutions.connect:connect-sdk-client-android:$connectSDK_version"
+    implementation libs.connect.sdk.client.android
 
-    implementation "com.google.code.gson:gson:$gson_version"
+    implementation libs.gson
 }

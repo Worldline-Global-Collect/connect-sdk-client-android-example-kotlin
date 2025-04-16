@@ -3,8 +3,8 @@
  */
 
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
 }
 
 android {
@@ -12,8 +12,8 @@ android {
 
     defaultConfig {
         minSdk 21
-        compileSdk 34
-        targetSdk 34
+        compileSdk 35
+        targetSdk 35
     }
 
     compileOptions {
@@ -49,19 +49,19 @@ android {
 
 dependencies {
     // Kotlin
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "com.google.code.gson:gson:$gson_version"
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.gson
     // Android X
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-core-ktx:$lifecycle_version"
+    implementation libs.core.ktx
+    implementation libs.lifecycle.viewmodel.ktx
+    implementation libs.lifecycle.livedata.core.ktx
 
     // UI
-    implementation "com.google.android.material:material:$material_version"
+    implementation libs.material
 
     // Google pay
-    implementation "com.google.android.gms:play-services-wallet:$googlePay_version"
+    implementation libs.play.services.wallet
 
     // Worldline
-    implementation "com.worldline-solutions.connect:connect-sdk-client-android:$connectSDK_version"
+    implementation libs.connect.sdk.client.android
 }

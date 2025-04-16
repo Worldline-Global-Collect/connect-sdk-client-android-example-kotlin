@@ -7,7 +7,7 @@ package com.worldline.connect.android.example.kotlin.common.utils
 object Constants {
 
     /** Application Identifier, used for identifying the application in network calls  */
-    const val APPLICATION_IDENTIFIER = "Android Example Application Kotlin/v2.0.2"
+    const val APPLICATION_IDENTIFIER = "Android Example Application Kotlin/v2.0.3"
 
     /** GooglePay identifier */
     const val GOOGLE_PAY_PRODUCT_ID = "320"

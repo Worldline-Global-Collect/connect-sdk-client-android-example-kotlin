@@ -186,7 +186,9 @@ class PaymentConfigurationFragment : Fragment() {
                         ConnectSDK.getConnectSdkConfiguration().sessionConfiguration.assetUrl
                     )
                     etPaymentConfigurationAmount.setText(
-                        ConnectSDK.getPaymentConfiguration().paymentContext.amountOfMoney.amount.toString()
+                        String.format(
+                            ConnectSDK.getPaymentConfiguration().paymentContext.amountOfMoney.amount.toString()
+                        )
                     )
                     etPaymentConfigurationCountryCode.setText(
                         ConnectSDK.getPaymentConfiguration().paymentContext.countryCode
@@ -304,7 +306,7 @@ class PaymentConfigurationFragment : Fragment() {
                     paymentSharedViewModel.globalErrorMessage.value =
                         paymentProductStatus.throwable.message
                 }
-                Status.None -> {
+                is Status.None, null -> {
                     // Init status; nothing to do here
                 }
             }

@@ -3,10 +3,10 @@
  */
 
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.kapt
+    alias libs.plugins.androidx.navigation.safeargs
 }
 
 android {
@@ -19,8 +19,8 @@ android {
     defaultConfig {
         applicationId "com.company.android.exampleapp.xml"
         minSdk 21
-        compileSdk 34
-        targetSdk 34
+        compileSdk 35
+        targetSdk 35
         versionCode 1
         versionName "1.0"
     }
@@ -52,26 +52,26 @@ dependencies {
     implementation project(path: ':common')
 
     // Kotlin
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation libs.kotlinx.coroutines.android
 
     // Android X
-    implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.appcompat:appcompat:$appCompat_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
-    implementation "androidx.cardview:cardview:1.0.0"
+    implementation libs.core.ktx
+    implementation libs.appcompat
+    implementation libs.navigation.fragment.ktx
+    implementation libs.navigation.ui.ktx
+    implementation libs.constraintlayout
+    implementation libs.cardview
 
     // UI
-    implementation "com.google.android.material:material:$material_version"
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation libs.material
+    implementation libs.picasso
     implementation files('libs/stepindicator-release.aar')
 
     // Worldline
-    implementation "com.worldline-solutions.connect:connect-sdk-client-android:$connectSDK_version"
+    implementation libs.connect.sdk.client.android
 
     // Google pay
-    implementation "com.google.android.gms:play-services-wallet:$googlePay_version"
+    implementation libs.play.services.wallet
 
-    implementation "com.google.code.gson:gson:$gson_version"
+    implementation libs.gson
 }

@@ -47,7 +47,9 @@ fun Header(navController: NavHostController) {
 @Composable
 fun HeaderContent(showBackButton: Boolean, onBackPressed: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 20.dp)
     ) {
         TopAppBar(
             title = {},
