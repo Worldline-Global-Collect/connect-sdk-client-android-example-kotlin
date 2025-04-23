@@ -254,12 +254,19 @@ class PaymentConfigurationFragment : Fragment() {
             0
         }
 
-        if (binding.cbPaymentConfigurationGooglePay.isChecked){
+        if (binding.cbPaymentConfigurationGooglePay.isChecked) {
             paymentSharedViewModel.googlePayConfiguration =
                 GooglePayConfiguration(
                     true,
                     binding.etPaymentConfigurationMerchantId.text.toString(),
                     binding.etPaymentConfigurationMerchantName.text.toString()
+                )
+        } else {
+            paymentSharedViewModel.googlePayConfiguration =
+                GooglePayConfiguration(
+                    true,
+                    null,
+                    null
                 )
         }
 

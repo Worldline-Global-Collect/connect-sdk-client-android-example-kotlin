@@ -4,6 +4,7 @@
 
 package com.worldline.connect.android.example.kotlin.compose
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -13,12 +14,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Snackbar
 import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -30,13 +33,13 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.worldline.connect.android.example.kotlin.compose.R
 import com.worldline.connect.android.example.kotlin.compose.card.CardScreen
 import com.worldline.connect.android.example.kotlin.compose.components.BottomSheetContent
 import com.worldline.connect.android.example.kotlin.compose.components.DefaultBottomSheet
@@ -66,9 +69,19 @@ fun ComposeApp(paymentSharedViewModel: PaymentSharedViewModel, launchGooglePay: 
     }
 
     val focusManager = LocalFocusManager.current
+    val snackbarHostState = remember { SnackbarHostState() }
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     var informationBottomSheetContent by
         remember { mutableStateOf(BottomSheetContent(R.string.payment_configuration_merchant_name_helper_text)) }
+
+    paymentSharedViewModel.globalErrorMessage.observe(LocalLifecycleOwner.current) { globalErrorMessage ->
+        if(!globalErrorMessage.isNullOrBlank()) {
+            Log.e("ComposeApp", "Global error message: $globalErrorMessage")
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(globalErrorMessage)
+            }
+        }
+    }
 
     ComposeTheme {
         ModalBottomSheetLayout(
@@ -84,9 +97,15 @@ fun ComposeApp(paymentSharedViewModel: PaymentSharedViewModel, launchGooglePay: 
                     },
                     snackbarHost = {
                         SnackbarHost(
-                            hostState = it,
+                            hostState = snackbarHostState,
                             modifier = Modifier.systemBarsPadding(),
-                            snackbar = { snackbarData -> Snackbar(snackbarData = snackbarData) })
+                            snackbar = { snackbarData ->
+                                Snackbar(
+                                    snackbarData = snackbarData,
+                                    backgroundColor = MaterialTheme.colors.error
+                                )
+                            }
+                        )
                     },
                 ) { paddingValues ->
                     AnimatedNavigation(

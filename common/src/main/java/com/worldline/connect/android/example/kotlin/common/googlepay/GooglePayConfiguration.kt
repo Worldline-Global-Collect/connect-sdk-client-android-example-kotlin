@@ -6,6 +6,10 @@ package com.worldline.connect.android.example.kotlin.common.googlepay
 
 data class GooglePayConfiguration(
     val configureGooglePay: Boolean,
-    val merchantId: String,
-    val merchantName: String,
-)
+    val merchantId: String?,
+    val merchantName: String?,
+) {
+    fun isValid(): Boolean {
+        return !merchantId.isNullOrBlank() || !merchantName.isNullOrBlank()
+    }
+}

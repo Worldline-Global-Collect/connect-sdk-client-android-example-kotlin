@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeSessionStatus() {
         paymentSharedViewModel.globalErrorMessage.observe(this) { globalErrorMessage ->
-            if(globalErrorMessage != null) {
+            if(!globalErrorMessage.isNullOrBlank()) {
                 Log.e(javaClass.name, "Global error message: $globalErrorMessage")
                 Snackbar.make(
                     binding.mainActivityContainer,

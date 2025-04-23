@@ -86,7 +86,7 @@ class PaymentProductFragment : Fragment() {
                         findNavController().navigate(PaymentProductFragmentDirections.navigateToPaymentCardFragment())
                     }
                     basicPaymentItem.id.equals(Constants.GOOGLE_PAY_PRODUCT_ID) -> {
-                        findNavController().navigate(PaymentProductFragmentDirections.navigateToGooglePayFragment())
+                        launchGooglePay()
                     }
                     else -> {
                         showPaymentProductNotImplementedBottomSheetDialog()
@@ -103,6 +103,15 @@ class PaymentProductFragment : Fragment() {
             else -> {
                 showPaymentProductNotImplementedBottomSheetDialog()
             }
+        }
+    }
+
+    private fun launchGooglePay() {
+        if (paymentSharedViewModel.googlePayConfiguration.isValid()) {
+            findNavController().navigate(PaymentProductFragmentDirections.navigateToGooglePayFragment())
+        } else {
+            paymentSharedViewModel.globalErrorMessage.value =
+                "Merchant ID and merchant name cannot be empty when using Google Pay"
         }
     }
 

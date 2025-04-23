@@ -25,9 +25,9 @@ import com.worldline.connect.sdk.client.android.network.ApiErrorResponse
  */
 class PaymentSharedViewModel(application: Application) : AndroidViewModel(application) {
 
-    var googlePayConfiguration: GooglePayConfiguration = GooglePayConfiguration(false, "", "")
+    var googlePayConfiguration: GooglePayConfiguration = GooglePayConfiguration(false, null, null)
 
-    val globalErrorMessage = MutableLiveData("")
+    val globalErrorMessage = MutableLiveData<String>()
     val paymentProductsStatus = MutableLiveData<Status>()
     var selectedPaymentProduct: Any? = null
 

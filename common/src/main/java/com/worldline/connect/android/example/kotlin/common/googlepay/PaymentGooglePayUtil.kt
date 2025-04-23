@@ -168,6 +168,11 @@ class PaymentGooglePayUtil(
     @Throws(JSONException::class)
     private fun getTransactionInfo(price: Long, countryCode: String, currencyCode: String): JSONObject {
         return JSONObject().apply {
+            /*
+             IMPORTANT!
+             This code assumes that the payment will be processed in a currency that uses two decimal places.
+             Currencies that have a different amount of decimal places, like JPY or KRW, must not be used with this example code.
+            */
             put("totalPrice", (price / 100f).toString())
             put("totalPriceStatus", "FINAL")
             put("countryCode", countryCode)

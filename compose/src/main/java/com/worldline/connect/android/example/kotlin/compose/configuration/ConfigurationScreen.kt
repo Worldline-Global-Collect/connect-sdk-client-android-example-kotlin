@@ -62,10 +62,15 @@ fun ConfigurationScreen(
             ),
             uiState.otherOptionsFields[2].isChecked.value
         )
+
         if (uiState.otherOptionsFields[3].isChecked.value) {
             paymentSharedViewModel.googlePayConfiguration = GooglePayConfiguration(true,
                 uiState.googlePayFields[0].text,
                 uiState.googlePayFields[1].text)
+        } else {
+            paymentSharedViewModel.googlePayConfiguration = GooglePayConfiguration(true,
+                null,
+                null)
         }
 
         uiState.configurationStatus.value = ConfigurationStatus.None

@@ -123,32 +123,39 @@ class PaymentGooglePayFragment : BottomSheetDialogFragment() {
      * Configure and show Google Pay sheet.
      */
     private fun requestGooglePayPayment(basicPaymentProduct: BasicPaymentProduct) {
-        val googlePayUtil = PaymentGooglePayUtil(
-            requireActivity(),
-            paymentSharedViewModel.googlePayConfiguration.merchantId,
-            paymentSharedViewModel.googlePayConfiguration.merchantName,
-            basicPaymentProduct.paymentProduct320SpecificData
-        )
+        if (paymentSharedViewModel.googlePayConfiguration.isValid()) {
+            // We are sure that merchantId and merchantName are not null here,
+            // since they are checked in the isValid function
+            val googlePayUtil = PaymentGooglePayUtil(
+                requireActivity(),
+                paymentSharedViewModel.googlePayConfiguration.merchantId!!,
+                paymentSharedViewModel.googlePayConfiguration.merchantName!!,
+                basicPaymentProduct.paymentProduct320SpecificData
+            )
 
-        val paymentDataRequestJson = googlePayUtil.getPaymentDataRequest(
-            ConnectSDK.getPaymentConfiguration().paymentContext.amountOfMoney.amount,
-            basicPaymentProduct.acquirerCountry,
-            ConnectSDK.getPaymentConfiguration().paymentContext.amountOfMoney.currencyCode
-        )
-        if (paymentDataRequestJson == null) {
-            paymentSharedViewModel.globalErrorMessage.value = "Google Pay Can't fetch payment data request"
-            return
+            val paymentDataRequestJson = googlePayUtil.getPaymentDataRequest(
+                ConnectSDK.getPaymentConfiguration().paymentContext.amountOfMoney.amount,
+                basicPaymentProduct.acquirerCountry,
+                ConnectSDK.getPaymentConfiguration().paymentContext.amountOfMoney.currencyCode
+            )
+            if (paymentDataRequestJson == null) {
+                paymentSharedViewModel.globalErrorMessage.value = "Google Pay Can't fetch payment data request"
+                return
+            }
+            val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
+
+            // Since loadPaymentData may show the UI asking the user to select a payment method, we use
+            // AutoResolveHelper to wait for the user interacting with it. Once completed,
+            // onActivityResult will be called with the result.
+            AutoResolveHelper.resolveTask(
+                googlePayUtil.paymentsClient.loadPaymentData(request),
+                requireActivity(),
+                GOOGLE_PAY_REQUEST_CODE
+            )
+        } else {
+            paymentSharedViewModel.globalErrorMessage.value =
+                "Merchant ID and merchant name cannot be empty when using Google Pay"
         }
-        val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
-
-        // Since loadPaymentData may show the UI asking the user to select a payment method, we use
-        // AutoResolveHelper to wait for the user interacting with it. Once completed,
-        // onActivityResult will be called with the result.
-        AutoResolveHelper.resolveTask(
-            googlePayUtil.paymentsClient.loadPaymentData(request),
-            requireActivity(),
-            GOOGLE_PAY_REQUEST_CODE
-        )
     }
 
     /**
