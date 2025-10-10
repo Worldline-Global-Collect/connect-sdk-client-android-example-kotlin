@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2022. Worldline Global Collect B.V
  */
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias libs.plugins.android.application
@@ -19,8 +20,8 @@ android {
     defaultConfig {
         applicationId "com.company.android.exampleapp.xml"
         minSdk 21
-        compileSdk 35
-        targetSdk 35
+        compileSdk = 36
+        targetSdk 36
         versionCode 1
         versionName "1.0"
     }
@@ -30,8 +31,10 @@ android {
         targetCompatibility java_version
     }
 
-    kotlinOptions {
-        jvmTarget = kotlin_jvm_target
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
     }
 
     buildTypes {
