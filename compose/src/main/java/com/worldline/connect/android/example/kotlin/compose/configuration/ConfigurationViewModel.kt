@@ -31,12 +31,14 @@ class ConfigurationViewModel : ViewModel() {
 
     fun parseClipBoardData(jsonString: String) {
         try {
-            Gson().fromJson(jsonString, SessionConfiguration::class.java).apply {
+            Gson().fromJson(jsonString, SessionConfiguration::class.java)?.apply {
                 uiState.sessionDetailFields[0].text = clientSessionId
                 uiState.sessionDetailFields[1].text = customerId
                 uiState.sessionDetailFields[2].text = clientApiUrl
                 uiState.sessionDetailFields[3].text = assetUrl
-            }
+            } ?: throw JsonSyntaxException(
+                "The clipboard data could not be parsed to a SessionConfiguration: \"$jsonString\""
+            )
         } catch (exception: JsonSyntaxException) {
             // Could not parse clipboard data due to a malformed JSON element
             Log.e(javaClass.name, exception.toString())

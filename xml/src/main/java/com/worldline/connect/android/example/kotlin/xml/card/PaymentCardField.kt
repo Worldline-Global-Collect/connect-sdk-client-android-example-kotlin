@@ -164,7 +164,6 @@ class PaymentCardField(context: Context, attributeSet: AttributeSet) : Constrain
             PHONE_NUMBER_KEYBOARD -> InputType.TYPE_CLASS_PHONE
             EMAIL_ADDRESS_KEYBOARD -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             DATE_PICKER -> InputType.TYPE_DATETIME_VARIATION_DATE
-            else -> InputType.TYPE_CLASS_TEXT
         }
         cardFieldTextInputEditText.inputType = inputType
     }

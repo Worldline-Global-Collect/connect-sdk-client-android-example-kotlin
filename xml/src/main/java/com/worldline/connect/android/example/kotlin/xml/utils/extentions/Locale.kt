@@ -9,9 +9,5 @@ import android.os.Build
 import java.util.*
 
 fun Context.getCurrentLocale(): Locale {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        this.resources.configuration.locales[0]
-    } else {
-        this.resources.configuration.locale
-    }
+    return this.resources.configuration.locales[0]
 }

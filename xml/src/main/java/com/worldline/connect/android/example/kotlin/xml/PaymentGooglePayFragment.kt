@@ -4,8 +4,6 @@
 
 package com.worldline.connect.android.example.kotlin.xml
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -14,9 +12,10 @@ import com.worldline.connect.android.example.kotlin.common.googlepay.PaymentGoog
 import com.worldline.connect.android.example.kotlin.common.googlepay.PaymentGooglePayViewModel
 import com.worldline.connect.android.example.kotlin.common.PaymentSharedViewModel
 import com.worldline.connect.android.example.kotlin.common.utils.Status
-import com.google.android.gms.wallet.AutoResolveHelper
+import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.wallet.PaymentData
 import com.google.android.gms.wallet.PaymentDataRequest
+import com.google.android.gms.wallet.contract.TaskResultContracts.GetPaymentDataResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.worldline.connect.sdk.client.android.ConnectSDK
 import com.worldline.connect.sdk.client.android.model.paymentrequest.EncryptedPaymentRequest
@@ -33,6 +32,22 @@ class PaymentGooglePayFragment : BottomSheetDialogFragment() {
     private val paymentGooglePayViewModel: PaymentGooglePayViewModel by viewModels()
     private val paymentSharedViewModel: PaymentSharedViewModel by activityViewModels()
 
+    /**
+     * Listener for when Google Pay sheet is finished
+     */
+    private val paymentDataLauncher = registerForActivityResult(GetPaymentDataResult()) { taskResult ->
+        when (taskResult.status.statusCode) {
+            CommonStatusCodes.SUCCESS ->
+                taskResult.result?.let(::handleGooglePaySuccess)
+            CommonStatusCodes.CANCELED -> dismiss()
+            else -> {
+                paymentSharedViewModel.globalErrorMessage.value =
+                    "Google pay loadPaymentData failed with error code: ${taskResult.status.statusCode}"
+                dismiss()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observePaymentProductStatus()
@@ -40,33 +55,6 @@ class PaymentGooglePayFragment : BottomSheetDialogFragment() {
         paymentGooglePayViewModel.getPaymentProductDetails(
             (paymentSharedViewModel.selectedPaymentProduct as BasicPaymentProduct).id
         )
-    }
-
-    /**
-     * Listener for when Google Pay sheet is finished
-     */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            GOOGLE_PAY_REQUEST_CODE -> {
-                when (resultCode) {
-                    Activity.RESULT_OK ->
-                        data?.let { intent ->
-                            PaymentData.getFromIntent(intent)?.let(::handleGooglePaySuccess)
-                        }
-                    Activity.RESULT_CANCELED -> {
-                        dismiss()
-                    }
-
-                    AutoResolveHelper.RESULT_ERROR -> {
-                        AutoResolveHelper.getStatusFromIntent(data)?.let { status ->
-                            paymentSharedViewModel.globalErrorMessage.value =
-                                "Google pay loadPaymentData failed with error code: ${status.statusCode}"
-                        }
-                        dismiss()
-                    }
-                }
-            }
-        }
     }
 
     private fun observePaymentProductStatus() {
@@ -145,13 +133,11 @@ class PaymentGooglePayFragment : BottomSheetDialogFragment() {
             val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
 
             // Since loadPaymentData may show the UI asking the user to select a payment method, we use
-            // AutoResolveHelper to wait for the user interacting with it. Once completed,
-            // onActivityResult will be called with the result.
-            AutoResolveHelper.resolveTask(
-                googlePayUtil.paymentsClient.loadPaymentData(request),
-                requireActivity(),
-                GOOGLE_PAY_REQUEST_CODE
-            )
+            // GetPaymentDataResult to wait for the user interacting with it. Once completed,
+            // paymentDataLauncher will be called with the result.
+            googlePayUtil.paymentsClient
+                .loadPaymentData(request)
+                .addOnCompleteListener(requireActivity(), paymentDataLauncher::launch)
         } else {
             paymentSharedViewModel.globalErrorMessage.value =
                 "Merchant ID and merchant name cannot be empty when using Google Pay"
@@ -180,6 +166,5 @@ class PaymentGooglePayFragment : BottomSheetDialogFragment() {
     companion object {
 
         private const val GOOGLE_PAY_TOKEN_FIELD_ID = "encryptedPaymentData"
-        private const val GOOGLE_PAY_REQUEST_CODE = 991
     }
 }

@@ -171,7 +171,8 @@ class PaymentGooglePayUtil(
             /*
              IMPORTANT!
              This code assumes that the payment will be processed in a currency that uses two decimal places.
-             Currencies that have a different amount of decimal places, like JPY or KRW, must not be used with this example code.
+             Currencies that have a different amount of decimal places,
+             like JPY or KRW, must not be used with this example code.
             */
             put("totalPrice", (price / 100f).toString())
             put("totalPriceStatus", "FINAL")

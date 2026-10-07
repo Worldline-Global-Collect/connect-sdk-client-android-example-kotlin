@@ -5,8 +5,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_jvm_target = '17'
-        java_version = JavaVersion.VERSION_17
+        kotlin_jvm_target = '21'
+        java_version = JavaVersion.VERSION_21
     }
     repositories {
         google()
@@ -21,6 +21,8 @@ buildscript {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete) {
+    allprojects.forEach { proj ->
+        delete(proj.layout.buildDirectory)
+    }
 }

@@ -13,9 +13,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,7 +35,8 @@ import com.worldline.connect.android.example.kotlin.compose.theme.ComposeTheme
 import com.worldline.connect.sdk.client.android.configuration.SessionConfiguration
 import com.worldline.connect.sdk.client.android.model.paymentcontext.AmountOfMoney
 import com.worldline.connect.sdk.client.android.model.paymentcontext.PaymentContext
-import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
+import kotlinx.coroutines.launch
 
 @Composable
 fun ConfigurationScreen(
@@ -43,7 +45,8 @@ fun ConfigurationScreen(
     configurationViewModel: ConfigurationViewModel,
     showBottomSheet: (BottomSheetContent) -> Unit
 ) {
-    val clipboard = LocalClipboardManager.current
+    val clipboard = LocalClipboard.current
+    val coroutineScope = rememberCoroutineScope()
     val uiState = configurationViewModel.uiState
 
     if (uiState.configurationStatus.value is ConfigurationStatus.Valid) {
@@ -57,7 +60,7 @@ fun ConfigurationScreen(
                 uiState.paymentDetailsFields[2].text),
                 uiState.paymentDetailsFields[1].text,
                 uiState.otherOptionsFields[0].isChecked.value,
-                Locale.getDefault(),
+                LocalLocale.current.platformLocale,
                 uiState.otherOptionsFields[1].isChecked.value,
             ),
             uiState.otherOptionsFields[2].isChecked.value
@@ -80,9 +83,15 @@ fun ConfigurationScreen(
     ConfigurationContent(uiState,
         onPrimaryButtonClicked = { configurationViewModel.validateForm() },
         onSecondaryButtonClicked = {
-            configurationViewModel.parseClipBoardData(
-                clipboard.getText().toString()
-            )
+            coroutineScope.launch {
+                val clipText = clipboard
+                    .getClipEntry()
+                    ?.clipData
+                    ?.getItemAt(0)
+                    ?.text
+                    ?.toString()
+                configurationViewModel.parseClipBoardData(clipText ?: "")
+            }
         },
         showBottomSheet = { showBottomSheet(it) })
 }

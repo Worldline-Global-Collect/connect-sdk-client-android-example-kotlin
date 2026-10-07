@@ -1,4 +1,6 @@
-/*
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}/*
  * Copyright (c) 2022. Worldline Global Collect B.V
  */
 

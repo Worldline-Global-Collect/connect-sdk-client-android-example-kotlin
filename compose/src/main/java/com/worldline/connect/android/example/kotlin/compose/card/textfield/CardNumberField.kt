@@ -20,7 +20,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 import com.worldline.connect.android.example.kotlin.compose.card.CardFieldVisualTransformation
 import com.worldline.connect.android.example.kotlin.compose.components.OutlinedTextFieldWithError
 import com.worldline.connect.android.example.kotlin.compose.extensions.convertToString
